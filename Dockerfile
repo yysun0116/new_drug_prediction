@@ -14,7 +14,7 @@ RUN pip3 install cmake --upgrade
 RUN pip3 install pandas==1.5.3 numpy==1.24.1 scikit-learn==1.2.0
 
 # Download dependent files for scDrug
-RUN git clone https://github.com/ailabstw/scDrug.git /scDrug
+RUN git clone https://github.com/yysun0116/new_drug_prediction.git /scDrug
 
 
 # Load shell script
