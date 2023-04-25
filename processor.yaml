@@ -1,0 +1,28 @@
+name: SCPred
+image: master.corp.ailabs.tw/taigenomics/scpred:v1
+category: Single Cell
+version: scDrug Sensitivity_Pred v1
+
+options:
+  - name: REQUEST_MEMORY
+    optionType: string
+    required: true
+    defaultValue: 5G
+    description: 'Number of the memory request'
+  - name: REQUEST_CPU
+    optionType: string
+    required: true
+    defaultValue: 1
+    description: 'Number of cpu core request'
+
+accessControl:
+  usableGroups: ["admin", "ailabs", "scdrug", "NTUH-HEMA"]
+  usableUsers: ["admin", "ailabs", "scdrug", "NTUH-HEMA"]
+
+
+in:
+  - filenameEnv: IN_FILE
+    acceptableExtensions: ['.txt']
+    required: true
+out:
+  - dirnameEnv: OUT_DIR
