@@ -10,7 +10,8 @@ from sklearn import svm
 # process arguments
 parser = argparse.ArgumentParser(description='Drug response prediction on new drugs')
 
-parser.add_argument('-i', '--input', required=True, help='path to input SMILES encoding of molecules (txt file) and the drug response prediction from PRISM (csv file)')
+parser.add_argument('-i', '--input', required=True, help='path to input PRISM prediction results (csv file)')
+parser.add_argument('-i', '--input_smiles', required=True, help='path to input SMILES encoding of molecules (txt file)')
 parser.add_argument('-o', '--output', default='./', help='path to output directory, default=\'./\'')
 
 args = parser.parse_args()
@@ -18,15 +19,19 @@ args = parser.parse_args()
 # check input
 if not os.path.exists(args.input):
     sys.exit('The input path does not exist.')
-if fnmatch.fnmatch(args.input, "*.txt") == False:
+if fnmatch.fnmatch(args.input, "*.csv") == False:
+    sys.exit('The input file is not a csv file.')
+
+if not os.path.exists(args.input_smiles):
+    sys.exit('The input path does not exist.')
+if fnmatch.fnmatch(args.input_smiles, "*.txt") == False:
     sys.exit('The input file is not a txt file.')
+
 
 # check output
 if not os.path.isdir(args.output):
     sys.exit('The output directory does not exist.')
 
-#scriptpath = '/scDrug/new_drug_prediction'
-#sys.path.append(os.path.abspath(scriptpath))
 
 class new_drug_prediction:
     def _init__(self):
@@ -37,7 +42,7 @@ class new_drug_prediction:
         self.compute_output()
         
     def load_prediction(self):
-        self.cadrres_pred = pd.read_csv(os.path.join(args.input, 'PRISM_prediction.csv'), index_col=0, header=[0,1])
+        self.cadrres_pred = pd.read_csv(args.input, index_col=0, header=[0,1])
         mapping_df = pd.read_csv('/scDrug/data/drugID_smiles_map.csv', index_col = 0)
         self.train_smiles = mapping_df.loc[[self.cadrres_pred.columns.get_level_values(0), 'smiles'].values]
     
@@ -48,7 +53,7 @@ class new_drug_prediction:
         return fps
     
     def load_input_mol(self):
-        with open(args.input) as f:
+        with open(args.input_smiles) as f:
             self.input_smiles = f.read().strip().split("\n")
 
     def prepare_fingerprints(self):
@@ -79,10 +84,3 @@ class new_drug_prediction:
         self.pred_auc_output.to_csv(os.path.join(args.output, "drug_level_prediction.csv"), index = True)
 
 job = new_drug_prediction()
-            
-
-    
-    
-
-
-
