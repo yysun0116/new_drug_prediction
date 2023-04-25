@@ -21,8 +21,11 @@ accessControl:
 
 
 in:
-  - filenameEnv: IN_FILE
+  - filenameEnv: IN_SMILES_FILE
     acceptableExtensions: ['.txt']
+    required: true
+  - filenameEnv: IN_FILE
+    acceptableExtensions: ['.csv']
     required: true
 out:
   - dirnameEnv: OUT_DIR

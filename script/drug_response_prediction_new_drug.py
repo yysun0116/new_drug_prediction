@@ -11,7 +11,7 @@ from sklearn import svm
 parser = argparse.ArgumentParser(description='Drug response prediction on new drugs')
 
 parser.add_argument('-i', '--input', required=True, help='path to input PRISM prediction results (csv file)')
-parser.add_argument('-i', '--input_smiles', required=True, help='path to input SMILES encoding of molecules (txt file)')
+parser.add_argument('-smiles', '--input_smiles', required=True, help='path to input SMILES encoding of molecules (txt file)')
 parser.add_argument('-o', '--output', default='./', help='path to output directory, default=\'./\'')
 
 args = parser.parse_args()
