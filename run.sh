@@ -8,15 +8,21 @@ if [ -z $IN_FILE ]; then
     exit 1
 fi
 
+if [ -z $IN_SMILES_DIR ] ; then
+    echo "Err: missing input parameters"
+    exit 1
+fi
+
 if [ -z $OUT_DIR ] ; then
     echo "Err: missing output parameters"
     exit 2
 fi
 
+
 # Make script
 
 mkdir -p $OUT_DIR
-echo -n "python3 /scDrug/script/drug_response_prediction_new_drug.py -o ${OUT_DIR} -i ${IN_FILE}" >> tmp.sh
+echo -n "python3 /scDrug/script/drug_response_prediction_new_drug.py -o ${OUT_DIR} -i ${IN_FILE} -i_smiles ${IN_SMILES_DIR}" >> tmp.sh
 
 
 # Execute
