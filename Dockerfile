@@ -12,7 +12,7 @@ RUN apt update \
 # Install python packages
 RUN pip3 install --upgrade pip
 RUN pip3 install cmake --upgrade
-RUN pip3 install scanpy pandas==1.5.3 numpy==1.24.1 openpyxl ipywidgets seaborn matplotlib scikit-learn==1.2.0
+RUN pip3 install scanpy pandas==1.5.3 numpy==1.24.1 openpyxl ipywidgets seaborn matplotlib scikit-learn==1.2.0 rdkit
 
 # Download dependent files for scDrug
 #RUN git clone https://github.com/ailabstw/scDrug.git /scDrug
