@@ -18,31 +18,31 @@ mkdir -p /opt/CaDRReS-Sc/data/CCLE
 mkdir -p /opt/CaDRReS-Sc/preprocessed_data/PRISM
 
 if [ -z $REF_CCLE ]; then
-   echo "Err: missing CCLE expression file"
-   exit 4
+    echo "Err: missing CCLE expression file"
+    exit 4
 else
-   ln -s $REF_CCLE /opt/CaDRReS-Sc/data/CCLE/CCLE_expression.csv
+    ln -s $REF_CCLE /opt/CaDRReS-Sc/data/CCLE/CCLE_expression.csv
 fi
 
 if [ -z $REF_GDSC ] ; then
-   echo "Err: missing GDSC expression file"
-   exit 4
+    echo "Err: missing GDSC expression file"
+    exit 4
 else
-   ln -s $REF_GDSC /opt/CaDRReS-Sc/data/GDSC/GDSC_exp.tsv
+    ln -s $REF_GDSC /opt/CaDRReS-Sc/data/GDSC/GDSC_exp.tsv
 fi
 
 if [ -z $REF_FEATURE ] ; then
-   echo "Err: missing feature information for PRISM"
-   exit 4
+    echo "Err: missing feature information for PRISM"
+    exit 4
 else
-   ln -s $REF_FEATURE /opt/CaDRReS-Sc/preprocessed_data/PRISM/feature_genes.txt
+    ln -s $REF_FEATURE /opt/CaDRReS-Sc/preprocessed_data/PRISM/feature_genes.txt
 fi
 
 if [ -z $REF_DRUG_INFO ] ; then
-   echo "Err: missing drug information for PRISM"
-   exit 4
+    echo "Err: missing drug information for PRISM"
+    exit 4
 else
-   ln -s $REF_DRUG_INFO /opt/CaDRReS-Sc/preprocessed_data/PRISM/PRISM_drug_info.csv
+    ln -s $REF_DRUG_INFO /opt/CaDRReS-Sc/preprocessed_data/PRISM/PRISM_drug_info.csv
 fi
 
 # Make script
@@ -63,9 +63,17 @@ else
     exit 3
 fi
 
+
 ## drug discovery option
-if [ ${DRUG_DISCOVERY} = "FALSE" ] || [ ! -z $NEW_DRUG ]; then
-    echo -n " && python3 /scDrug/script/new_drug_prediction.py -i ${OUT_DIR} -smiles ${NEW_DRUG} -o ${OUT_DIR} -m ${MODEL}" >> tmp.sh
+if [ ${DRUG_DISCOVERY} = "FALSE" ]; then
+   echo "not include drug discovery process"
+else
+   if [ -z $NEW_DRUG ]; then
+      echo "Err: missing new drug smiles file"
+      exit 4
+   else
+      echo -n " && python3 /scDrug/script/new_drug_prediction.py -i ${OUT_DIR} -smiles ${NEW_DRUG} -o ${OUT_DIR} -m ${MODEL}" >> tmp.sh
+   fi
 fi
 
 
